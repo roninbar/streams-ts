@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "outDir": "./built",
+        "target": "ES2021"
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}
