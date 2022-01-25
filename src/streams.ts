@@ -21,7 +21,7 @@ export function memoize<T>(proc: () => T): () => T {
 }
 
 export function cons<T>(first: T, rest: Delayed<Stream<T>>): Stream<T> {
-    return { first, rest };
+    return { first, rest: memoize(rest) };
 }
 
 export function first<T>(s: Stream<T>): T {

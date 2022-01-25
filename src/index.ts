@@ -15,7 +15,7 @@ foreach(
     takewhile(
         p => p < 1_000_000,
         dropwhile(
-            p => p < 5,
+            p => p < 1000,
             fibs,
         )
     )
