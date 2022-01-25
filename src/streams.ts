@@ -55,14 +55,14 @@ export function ref<T>(n: number, s: Stream<T>): T {
     return first(s);
 }
 
-export function foreach<T>(proc: (T) => any, s: Stream<T>): void {
+export function foreach<T>(proc: (value: T) => any, s: Stream<T>): void {
     while (s) {
         proc(first(s));
         s = rest(s);
     }
 }
 
-export function filter<T>(test: (T) => boolean, s: Stream<T>): Stream<T> {
+export function filter<T>(test: (value: T) => boolean, s: Stream<T>): Stream<T> {
     while (s && !test(first(s))) {
         s = rest(s);
     }
@@ -78,7 +78,7 @@ export function map<T>(proc: (...args: T[]) => T, ...ss: Stream<T>[]): Stream<T>
         : null;
 }
 
-export function takewhile<T>(test: (T) => boolean, s: Stream<T>): Stream<T> {
+export function takewhile<T>(test: (value: T) => boolean, s: Stream<T>): Stream<T> {
     return s && test(first(s))
         ? cons(
             first(s),
@@ -87,7 +87,7 @@ export function takewhile<T>(test: (T) => boolean, s: Stream<T>): Stream<T> {
         : null;
 }
 
-export function dropwhile<T>(test: (T) => boolean, s: Stream<T>): Stream<T> {
+export function dropwhile<T>(test: (value: T) => boolean, s: Stream<T>): Stream<T> {
     while (s && test(first(s))) {
         s = rest(s);
     }
