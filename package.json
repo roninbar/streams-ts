@@ -1,5 +1,6 @@
 {
   "name": "streams",
+  "type": "module",
   "version": "1.0.0",
   "description": "Scheme-style streams in TypeScript",
   "main": "index.js",
