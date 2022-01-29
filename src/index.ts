@@ -1,40 +1,53 @@
-import { cons, count, dropwhile, filter, first, foreach, map, rest, Stream, takewhile } from './streams';
+import { pair, count, dropwhile, filter, head, foreach, map, tail, Stream, takewhile } from './streams';
 
 function add(s1: Stream<number>, s2: Stream<number>): Stream<number> {
     return map((a, b) => a + b, s1, s2);
 }
 
-const ones = cons(1, () => ones);
+const ones = pair(1, () => ones);
 
-const integers = cons(1, () => add(integers, ones));
+const integers = pair(1, () => add(integers, ones));
 
-const fibs = cons(0, () => cons(1, () => add(fibs, rest(fibs))));
+const fibs = pair(0, () => pair(1, () => add(fibs, tail(fibs))));
 
 function sieve(s: Stream<number>): Stream<number> {
-    const p = first(s);
-    return cons(p, () => sieve(filter(n => n % p != 0, rest(s))));
+    const p = head(s);
+    return pair(p, () => sieve(filter(n => n % p != 0, tail(s))));
 }
 
-const primes = cons(2, () => filter(function (n) {
+const primes = pair(2, () => filter(function (n) {
     let ps = primes, p: number;
-    while ((p = first(ps)) ** 2 <= n) {
+    while ((p = head(ps)) ** 2 <= n) {
         if (n % p == 0) {
             return false;
         }
-        ps = rest(ps);
+        ps = tail(ps);
     }
     return true;
 }, count(3)));
 
+function zip<T>(s1: Stream<T>, s2: Stream<T>): Stream<T[]> {
+    return map((a, b) => [a, b], s1, s2);
+}
+
+const twinPrimes = filter(
+    ([a, b]) => b - a === 2,
+    zip(
+        primes,
+        tail(primes),
+    ),
+);
+
 foreach(
-    function (n) {
-        console.log(n.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));
-    },
+    // function (twins) {
+    //     console.log(twins.map(p => p.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')).join(' - '));
+    // },
+    console.log,
     takewhile(
-        p => p < 1_000_000,
+        ([p]) => p < 1_000_000,
         dropwhile(
-            p => p < 1000,
-            primes,
+            ([p]) => p < 100_000,
+            twinPrimes,
         )
     )
 );
