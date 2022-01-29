@@ -69,7 +69,7 @@ export function filter<T>(test: (value: T) => boolean, s: Stream<T>): Stream<T> 
     return s ? cons(first(s), () => filter(test, rest(s))) : null;
 }
 
-export function map<T>(proc: (...args: T[]) => T, ...ss: Stream<T>[]): Stream<T> {
+export function map<T, S>(proc: (...args: T[]) => S, ...ss: Stream<T>[]): Stream<S> {
     return ss[0]
         ? cons(
             proc(...ss.map(first)),
