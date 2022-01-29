@@ -1,4 +1,4 @@
-import { pair, count, dropwhile, filter, head, foreach, map, tail, Stream, takewhile } from './streams';
+import { count, dropwhile, filter, foreach, head, map, pair, Stream, tail, takewhile } from './streams';
 
 function add(s1: Stream<number>, s2: Stream<number>): Stream<number> {
     return map((a, b) => a + b, s1, s2);
@@ -38,16 +38,22 @@ const twinPrimes = filter(
     ),
 );
 
+function addDigitSeparators(p: number): string {
+    return p.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
+
+const table = [];
+
 foreach(
-    // function (twins) {
-    //     console.log(twins.map(p => p.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')).join(' - '));
-    // },
-    console.log,
+    table.push.bind(table),
     takewhile(
         ([p]) => p < 1_000_000,
         dropwhile(
             ([p]) => p < 100_000,
             twinPrimes,
-        )
-    )
+        ),
+    ),
 );
+
+console.table(table);
+
