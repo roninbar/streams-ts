@@ -78,6 +78,10 @@ export function map<T, S>(proc: (...args: T[]) => S, ...ss: Stream<T>[]): Stream
         : null;
 }
 
+export function zip<T1, T2>(s1: Stream<T1>, s2: Stream<T2>): Stream<(T1 | T2)[]> {
+    return map<T1 | T2, (T1 | T2)[]>((a, b) => [a, b], s1, s2);
+}
+
 export function takewhile<T>(test: (value: T) => boolean, s: Stream<T>): Stream<T> {
     return s && test(head(s))
         ? pair(
