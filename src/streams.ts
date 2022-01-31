@@ -8,7 +8,7 @@ export function force<T>(p: Delayed<T>): T {
     return p();
 }
 
-export function memoize<T>(proc: () => T): () => T {
+export function memo<T>(proc: () => T): () => T {
     let alreadyRun = false;
     let result: T;
     return function () {
@@ -21,7 +21,7 @@ export function memoize<T>(proc: () => T): () => T {
 }
 
 export function pair<T>(head: T, tail: Delayed<Stream<T>>): Stream<T> {
-    return { head, tail: memoize(tail) };
+    return { head, tail: memo(tail) };
 }
 
 export function head<T>(s: Stream<T>): T {
@@ -49,7 +49,7 @@ export function count(start: number, step: number = 1): Stream<number> {
 }
 
 export function ref<T>(n: number, s: Stream<T>): T {
-    for (let i = 0; i < n; i++) {
+    while (n-- > 0) {
         s = tail(s);
     }
     return head(s);

@@ -6,7 +6,7 @@ function add(s1: Stream<number>, s2: Stream<number>): Stream<number> {
 
 const ones = pair(1, () => ones);
 
-const integers = pair(1, () => add(integers, ones));
+const integers = pair(0, () => add(integers, ones));
 
 const fibs = pair(0, () => pair(1, () => add(fibs, tail(fibs))));
 
@@ -16,12 +16,10 @@ function sieve(s: Stream<number>): Stream<number> {
 }
 
 const primes = pair(2, () => filter(function (n) {
-    let ps = primes, p: number;
-    while ((p = head(ps)) ** 2 <= n) {
-        if (n % p == 0) {
+    for (let ps = primes; head(ps) ** 2 <= n; ps = tail(ps)) {
+        if (n % head(ps) == 0) {
             return false;
         }
-        ps = tail(ps);
     }
     return true;
 }, count(3)));
