@@ -50,15 +50,11 @@ function merge2(s1: Stream<number>, s2: Stream<number>): Stream<number> {
     } else if (!s2) {
         return s1;
     } else {
-        return head(s1) < head(s2)
-            ? pair(head(s1), () => merge2(
-                tail(s1),
-                s2))
-            : pair(head(s2), () => merge2(
-                tail(s2),
-                head(s2) < head(s1)
-                    ? s1
-                    : tail(s1)));
+        if (head(s2) < head(s1)) {
+            [s1, s2] = [s2, s1];
+        }
+        // Now, head(s1) <= head(s2)
+        return pair(head(s1), () => merge2(tail(s1), head(s1) === head(s2) ? tail(s2) : s2));
     }
 }
 
