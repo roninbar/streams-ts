@@ -1,20 +1,21 @@
 {
-  "name": "streams",
-  "type": "module",
-  "version": "1.0.0",
-  "description": "Scheme-style streams in TypeScript",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "Scheme",
-    "streams",
-    "typescript"
-  ],
-  "author": "Ron Inbar",
-  "license": "ISC",
-  "devDependencies": {
-    "typescript": "^4.5.5"
-  }
+    "name": "streams",
+    "type": "module",
+    "version": "1.0.0",
+    "description": "Scheme-style streams in TypeScript",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "SICP",
+        "Scheme",
+        "streams",
+        "typescript"
+    ],
+    "author": "Ron Inbar",
+    "license": "ISC",
+    "devDependencies": {
+        "typescript": "^4.5.5"
+    }
 }
