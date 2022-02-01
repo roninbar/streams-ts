@@ -41,14 +41,14 @@ export function range(start: number, finish: number, step: number = 1): Stream<n
         : null;
 }
 
-export function count(start: number, step: number = 1): Stream<number> {
+export function count(start: bigint, step: bigint = 1n): Stream<bigint> {
     return pair(
         start,
         () => count(start + step)
     );
 }
 
-export function ref<T>(n: number, s: Stream<T>): T {
+export function ref<T>(n: number | bigint, s: Stream<T>): T {
     while (n-- > 0) {
         s = tail(s);
     }
